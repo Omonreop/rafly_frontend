@@ -39,8 +39,12 @@ export default function MeetingTable() {
               <td className="border p-2">{meeting.unit}</td>
               <td className="border p-2">{meeting.room}</td>
               <td className="border p-2">{meeting.capacity} Orang</td>
-              <td className="border p-2">{meeting.date}</td>
-              <td className="border p-2">{meeting.time}</td>
+              <td className="border p-2">
+                {new Date(meeting.meetingDate).toLocaleDateString("id-ID")}
+              </td>
+              <td className="border p-2">
+                {meeting.startTime} - {meeting.endTime}
+              </td>
               <td className="border p-2">{meeting.participants} Orang</td>
               <td className="border p-2">{meeting.consumption.join(", ")}</td>
             </tr>

@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -7,7 +8,8 @@ const MeetingForm = () => {
   const [formData, setFormData] = useState({
     unit: "",
     room: "",
-    date: "",
+    capacity: 10,
+    meetingDate: "",
     startTime: "",
     endTime: "",
     participants: "",
@@ -30,10 +32,24 @@ const MeetingForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data Submitted:", formData);
-    navigate("/");
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/meetings",
+        formData
+      );
+
+      console.log("Response Data:", response.data); // Cek response dari backend
+
+      navigate("/"); // Redirect setelah sukses
+    } catch (error) {
+      console.error(
+        "Error:",
+        error.response ? error.response.data : error.message
+      );
+    }
   };
 
   return (
@@ -62,7 +78,7 @@ const MeetingForm = () => {
           <input
             type="date"
             name="date"
-            value={formData.date}
+            value={formData.meetingDate}
             onChange={handleChange}
             className="border p-2"
             required
